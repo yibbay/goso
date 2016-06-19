@@ -2,16 +2,40 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var CompDetailFooter = require('./compFooterDetail');
+var CompLayout = require('./comLayout');
+
+
 
 //商品详情组件布局开始
 var CompDetail = React.createClass({
+    handleClick:function(){
 
+        ReactDOM.unmountComponentAtNode(document.body);
+
+        ReactDOM.render(<CompLayout/>,document.body);
+
+        var ComponentHeader = require('./compheader');
+        ReactDOM.render(<ComponentHeader/>, document.getElementById("header"));
+
+        var ComponentSearch = require('./compSearch');
+        ReactDOM.render(<ComponentSearch/>, document.getElementById("search"));
+
+        var ComponentBanner = require('./compBanner');
+        ReactDOM.render(<ComponentBanner/>, document.getElementById("banner"));
+
+        var ComponentList = require('./compList');
+        ReactDOM.render(<ComponentList/>, document.getElementById("list"));
+
+        var ComponentFooter = require('./compFooter');
+        ReactDOM.render(<ComponentFooter/>, document.getElementById("footer"));
+
+    },
     render: function () {
         //console.log(this.props.goodsListImg);
         return (
             <div >
-                <div style={this._css.yellow} className="detail-header">
-                    <div style={this._css.left}>
+                <div  style={this._css.yellow} className="detail-header">
+                    <div onClick={this.handleClick} style={this._css.left}>
                         <img style={this._css.leftimg} src="img/jian.png" alt=""/>
                     </div>
                     <h4 style={this._css.h4}>商品介绍</h4>
