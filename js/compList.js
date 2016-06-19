@@ -64,9 +64,8 @@ var ComponentListItem = React.createClass({
 			dataType:'jsonp',
 			url:url+_this.props.goodsID,
 			success:function(data){
-				console.log(data);
-				
-				ReactDOM.render(<CompDetail />,document.body);
+				//console.log(data[0]);
+				ReactDOM.render(<CompDetail {...data[0]} />,document.body);
 			}
 		})
 		
