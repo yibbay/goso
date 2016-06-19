@@ -1,6 +1,9 @@
+//引入依赖模块
 var React = require('react');
 var ReactDOM = require('react-dom');
+var CompDetailFooter = require('./compFooterDetail');
 
+//商品详情组件布局开始
 var CompDetail = React.createClass({
 
     render: function () {
@@ -17,43 +20,47 @@ var CompDetail = React.createClass({
                     </div>
                 </div>
                 <div style={this._css.countdown} className="count-down">
-                        <CompDetailTimeDown />
+                    <CompDetailTimeDown />
                 </div>
                 <div className="goods-detail">
-                    <CompDetailItem  data={this.props}/>
+                    <CompDetailItem data={this.props}/>
                 </div>
                 <div >
-
+                    <CompDetailFooter />
                 </div>
             </div>
         )
     }
 
 });
+//商品详情组件布局结束
 
+//商品详情图片子组件开始
 var CompDetailItem = React.createClass({
 
     render: function () {
-        console.log(this.props.data);
+        //console.log(this.props.data);
         return (
             <div>
-                <div>
-                    <img src={this.props.data.goodsListImg} alt=""/>
+                <div style={this.CSS.gImgContainer}>
+                    <img style={this.CSS.goodsImg} src={this.props.data.goodsListImg} alt=""/>
                 </div>
-                <div>
+                <div style={this.CSS.gImgContainer}>
                     <img className="img-goods" src="img/31.png" alt=""/>
                 </div>
                 <div className="goods-price">
                     <span>市场价：</span>
-                    ￥{this.props.data.price}&nbsp;&nbsp;
-                    <span>{this.props.data.discount}</span>折&nbsp;&nbsp;
+                    <span style={this.CSS.spanDecoration}>￥{this.props.data.price}</span> &nbsp;
+                    <span>{this.props.data.discount}</span>折&nbsp;&nbsp;&nbsp;
                     <span>{this.props.data.buynumber}</span>人购买
                 </div>
             </div>
         )
     }
 });
+//商品详情图片子组件结束
 
+//商品详情倒计时子组件开始
 var CompDetailTimeDown = React.createClass({
     getInitialState: function () {
         var date = new Date();
@@ -64,8 +71,11 @@ var CompDetailTimeDown = React.createClass({
 
 
         return {
-            timedown:'倒计时:' + (30 - days) + '天' + (23 - hours) + '时' + (59 - mi) + '分' + (59 - s) + '秒',// 主要看分钟数，分钟为9则写8；
-    }
+            timedown: '倒计时:' + (30 - days) + '天' + (23 - hours) + '时' + (59 - mi) + '分' + (59 - s) + '秒',// 主要看分钟数，分钟为9则写8；
+            setDay: 30,
+            setHours: 23,
+            setMin: 59
+        }
     },
     render: function () {
         var _this = this;
@@ -77,7 +87,7 @@ var CompDetailTimeDown = React.createClass({
             var mi = date.getMinutes();
             var s = date.getSeconds();
             _this.setState({
-                timedown: '倒计时:' + (30 - days) + '天' + (23 - hours) + '时' + (59 - mi) + '分' + (59 - s) + '秒',// 主要看分钟数，分钟为9则写8；
+                timedown: '倒计时:' + (_this.state.setDay - days) + '天' + (_this.state.setHours - hours) + '时' + (_this.state.setMin - mi) + '分' + (59 - s) + '秒',// 主要看分钟数，分钟为9则写8；
             });
 
             var timer = setTimeout(arguments.callee, 1000);
@@ -97,8 +107,9 @@ var CompDetailTimeDown = React.createClass({
 
 
 });
+//商品详情倒计时子组件结束
 
-
+//布局组件css
 CompDetail.prototype._css = (function () {
 
     return {
@@ -139,12 +150,30 @@ CompDetail.prototype._css = (function () {
             background: '#333333',
             fontSize: '0.33rem',
             color: 'white',
-            textAlign:'center',
-            lineHeight:'1rem'
+            textAlign: 'center',
+            lineHeight: '1rem'
         }
     }
 
 })();
 
+CompDetailItem.prototype.CSS = {
+    gImgContainer: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        margin: '0.3rem 0'
+    },
+    goodsImg: {
+        height: '4rem',
+        display: 'block',
+        width: '75%',
+        border: '1px solid #ccc'
+    },
+    tabImg: {},
+    spanDecoration:{
+        textDecoration:'line-through'
+    }
 
+};
 module.exports = CompDetail;
